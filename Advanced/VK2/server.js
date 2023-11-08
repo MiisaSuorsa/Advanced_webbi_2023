@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 app.use("/hello", require("./hello.js"));
 app.use("/echo", require("./echo.js"));
 app.use("/sum", require("./sum.js"));
-app.use("/index", require("./index.js"));
+//app.use("/index", require("./index.js"));
 app.use("/list", require("./list.js"));
 
 app.listen(port);

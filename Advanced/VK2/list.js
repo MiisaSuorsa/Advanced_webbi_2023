@@ -3,7 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const fs = require("fs");
 
-let inputText = [];
+/*let inputText = [];
 
 fs.readFile('./inputText.json', "utf-8", (err, data) => {
     if(err) {
@@ -19,14 +19,14 @@ fs.readFile('./inputText.json', "utf-8", (err, data) => {
 
 })
 
-
+*/
 router.use(bodyParser.json());
-
+const inputText = [];
 router.post("/", (req, res) => {
-    console.log(req.body.text);
+    //console.log(req.body.text);
+    //console.log(req.body);
     let text = req.body.text;
-    let amount = inputText.push(text);
-    console.log(amount);
+    inputText.push(text);
     //inputText = JSON.stringify(req.body.text);
     fs.writeFile("./inputText.json", JSON.stringify(inputText), err => {
         if(err) {

@@ -20,13 +20,7 @@ function initializeCode() {
             headers: {
                 "Content-type": "application/json"
             },
-            body: input.value
+            body: '{ "text": "' + input.value + '" }'
            })
-           .then(response => response.json())
-           .then(data => {
-               console.log(data);
-           })
-
-
     })
 }
