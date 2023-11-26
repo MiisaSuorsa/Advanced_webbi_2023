@@ -1,0 +1,63 @@
+Recipe app with back-end
+This week's assignment is to build a recipe app. It is done by using Node.js and Express.js.
+
+
+Requirements and Scoring
+1. First API
+Create a GET route to "/recipe/:food". This route should send recipe for the client.
+Recipe is sent as a JSON object, and it should have the following attributes: name, instructions and ingredients.
+Name is for the name of the meal, instructions is a list of strings and ingredients are also a list of strings.
+In this case, the response may have static values for instructions and ingredients, but the name should be retrieved from the url parameter.
+For example, if connecting to "/recipe/pizza", the name in the return value should be "pizza", and if connecting to "/recipe/pasta", the name should be "pasta".
+
+
+
+2. Page that uses the API
+Create an index page for this application in which the recipe is shown.
+You may use view engines such as jade or ejs, but the recipe has to be fetched from the recipe route.
+In this case, it does not matter what meal you are fetching, it can be "pizza" for instance.
+Also, it does not matter how you show the recipe in the page, but it has to be somehow rendered.
+Only restriction is that the strings should be shown as is, but you may still slice the arrays, for instance, to unordered list.
+
+
+
+3. Adding a new recipe
+Next feature in the application will be adding new recipes. Create a POST route "/recipe/".
+Notice the exta "/" at the end, "/recipe" won't work. This route is going to record new recipes in JSON format, and the recipe will follow the same structure as in the first task.
+In other words, the JSON object should consist of name, instructions and ingredients. When the server has received the new recipe, make it return the same JSON object back.
+
+On the front-end, the index page should have the following elements:
+
+<input type="text" id="name-text">
+<h4>Ingredients</h4>
+<textarea id="ingredients-text"></textarea>
+<button id="add-ingredient" type="button">Add ingredient</button>
+<h4>instructions</h4>
+<textarea id="instructions-text"></textarea>
+<button id="add-instruction" type="button">Add instruction</button>
+<button id="submit" type="submit">Submit</button>
+
+name-text is for inserting the name of the recipe. when add-ingredient is pressed, it should take the value of the ingredient-text and put in a list to wait.
+Same goes to instructions. Then, when the submit button is pressed, the recipe should be sent to "/recipe/".
+
+
+
+4. Uploading image
+This assigment is for practicing file handling in web application. Create a <input> that is for files. It should have an id image-input.
+It should only allow images, and it can accept multiple files. When the submit button is pressed, it should send the image as FormData to route "/images".
+Put the images to formdata as a list to key "images".
+
+Note: At this stage you have to send something back to the client from the "/images" POST route. (res.send("Hi"), for example.)
+We will handle the backend implementation next week.
+
+
+
+5. Materialize CSS
+Add Materialize CSS to your project. Wrap everything existing inside one div, and that div should have a class container.
+Inside this div, there should be only two children divs, one for viewing the recipe and one for adding a recipe.
+These divs should have class col. Then, each button should have btn class.
+
+Then add a NavBar from Materialize CSS to your project to make a toolbar. It should be above the container div. Follow the instructions in the site.
+There may be anything you want inside this element, but you should use the wrapper div (div with a class nav-wrapper) like in the examples from their site.
+
+Materialize CSS: https://materializecss.com/
