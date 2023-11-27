@@ -14,8 +14,9 @@ function initializeCode() {
     let recipeName = document.getElementById("recipe-name");
     let r_ingredients = document.getElementById("ingredients");
     let r_instructions = document.getElementById("instructions");
+    let object = {};
 
-    fetch("http://localhost:3000/recipe/", {
+    fetch("http://localhost:3000/recipe/pitsa", {
             method: "get"
         })
         .then(function(res) {
@@ -28,7 +29,8 @@ function initializeCode() {
             r_instructions.innerHTML = dataj.instructions;
         })
 
-    const searchBar = document.getElementById("name-text");
+    const searchBar = document.getElementById("search-text");
+
 
     searchBar.addEventListener("keypress", function(event){
         let recipeName = document.getElementById("recipe-name");
@@ -51,31 +53,40 @@ function initializeCode() {
         }
     });
 
-    let containerList = [];
+
+    let ingredientList = [];
+    let instructionList = [];
 
     const addIngredientBtn = document.getElementById("add-ingredient");
 
     addIngredientBtn.addEventListener("click", function(){
         let inputIngredient = document.getElementById("ingredients-text");
-        containerList.push(inputIngredient.value);
+        ingredientList.push(inputIngredient.value);
     });
 
     const addInstructionBtn = document.getElementById("add-instruction");
 
     addInstructionBtn.addEventListener("click", function(){
         let inputInstruction = document.getElementById("instructions-text");
-        containerList.push(inputInstruction.value);
+        instructionList.push(inputInstruction.value);
     });
 
     const submit = document.getElementById("submit");
+    
 
     submit.addEventListener("click", function(){
+        const inputName = document.getElementById("name-text");
+        console.log(inputName.value);
+        object.name = inputName.value;
+        object.ingredients = ingredientList;
+        object.instructions = instructionList;
         fetch("http://localhost:3000/recipe/", {
             method:"post",
             headers: {
                 "Content-type": "application/json"
             },
-            body: '{ "name": "' + searchBar.value + '", "ingredients": "' + containerList[0] + '", "instructions": "' + containerList[1] + '" }'
+            body: JSON.stringify(object)
+            //'{ "name": "' + searchBar.value + '", "ingredients": ' + ingredientList + ', "instructions": ' + instructionList + ' }'
         })
         .then(function(res) {
             return res.json();
@@ -85,7 +96,50 @@ function initializeCode() {
             recipeName.innerHTML = dataj.name;
             r_ingredients.innerHTML = dataj.ingredients;
             r_instructions.innerHTML = dataj.instructions;
+            ingredientList = [];
+            instructionList = [];
+        })
+
+        const imageFile = document.getElementById("image-input");
+        const formData = new FormData();
+        //data.append('name', 'Image Upload');
+        formData.append('file_attachment', imageFile);
+
+        fetch("http://localhost:3000/images/", {
+            method: "post",
+            body: formData,
+        })
+        .then(function(res) {
+            return res.text();
+        })
+        .then(function(data){
+            console.log("done");
         })
     });
 
 }
+
+/*
+, function(){
+        if ( imageFile != null ) {
+            const data = new FormData();
+            data.append('name', 'Image Upload');
+            data.append('file_attachment', imageFile);
+            fetch("http://localhost:3000/images/", {
+                method: "post",
+                body: data,
+                headers: {
+                    'Content-Type': 'multipart/form-data; ',
+                }
+            })
+            let responseJson = res.json();
+            if (responseJson.status == 1) {
+                alert('Upload Successful');
+            }
+        }
+         else {
+        //if no file selected the show alert
+            alert('Please Select File first');
+        }
+    }
+*/

@@ -6,69 +6,43 @@ const recipes = [];
 
 router.get('/', function(req, res, next) {
   console.log("I'm here to get");
-  //let req_name = req.params.food;
   let req_name2 = "pitsa";
-  //res.json({name: req_name, instructions: "instructions", ingredients: "ingredients"});
-  //res.render('index', { title: req_name });
-  //name: "name of the meal :food", instructions: [list of strings], ingredients: "ingredients"
   let req_instructions = ["step 1:  ", "step 2:  "];
   let req_ingredients = ["pippuri", "suola", "Kurpitsa"];
-  res.json({name: req_name2, instructions: req_instructions, ingredients: req_ingredients});
-  //res.end();
+  res.json({name: req_name2, ingredients: req_ingredients, instructions: req_instructions});
 })
 
 router.get('/:food', function(req, res, next) {
   console.log("I'm here to get");
   let req_name = req.params.food;
+  let recipe = recipes.find(recipe => recipe.name === req_name);
 
-  //res.json({name: req_name, instructions: "instructions", ingredients: "ingredients"});
-  //res.render('index', { title: req_name });
-  //name: "name of the meal :food", instructions: [list of strings], ingredients: "ingredients"
-  let req_instructions = ["step 1:  ", "step 2:  "];
-  let req_ingredients = ["pippuri", "suola", "Kurpitsa"];
-  res.json({name: req_name, instructions: req_instructions, ingredients: req_ingredients});
-  //res.end();
+  if (recipe) {
+    console.log(recipe.instructions[0]);
+    res.json(recipe);
+  }
+  else{
+    let req_instructions = ["step 1:  ", "step 2:  "];
+    let req_ingredients = ["pippuri", "suola", "Kurpitsa"];
+    res.json({name: req_name, ingredients: req_ingredients, instructions: req_instructions});
+  }
 })
 
 //save new recipe into a list
-router.post('/', function(req, res, next) {
+router.post('', function(req, res, next) {
   console.log("I'm here to post");
   //add first
-  let object ={ name: req.body.name, instructions: [req.body.instructions], ingredients: [req.body.ingredients] };
+  //create lists
+  console.log(req.body.ingredients);
+  let ingredientList = req.body.ingredients.split(",");
+  let instructionList = req.body.instructions.split(",");
+  console.log(ingredientList);
+  //let object ={ name: req.body.name, ingredients: [req.body.ingredients], instructions: [req.body.instructions] };
+  let object ={ name: req.body.name, ingredients: ingredientList, instructions: instructionList };
   recipes.push(object);
   console.log("added recipe " + req.body.name);
-  res.json({ name: req.body.name, instructions: [req.body.instructions], ingredients: [req.body.ingredients] });
-  /*
-  if ( recipes.length === 0){
-    //add first
-    let object ={ name: req.body.name, instructions: [req.body.instructions], ingredients: [req.body.ingredients] };
-    recipes.push(object);
-    console.log("added recipe " + req.body.name);
-    res.json({ name: req.body.name, instructions: [req.body.instructions], ingredients: [req.body.ingredients] });
-
-  }
-  else{
-    console.log("päivitetään lista: ");
-
-    for ( let i = 0; i < todoList.length; i++ ){
-
-        let recipe = recipes.find(recipe => recipe.name === req.body.name);
-        if (recipe){
-            recipes[i].instructions.push(req.body.instructions);
-            console.log("listaan päivitetty: " + JSON.stringify(todoList));
-            res.json({ res: "Todo added"});
-            return
-        }
-        else{
-            let object ={ name: req.body.name, todos: [req.body.todos] };
-            todoList.push(object);
-            console.log("added new user");
-            res.json({ res: "User added"});
-            return
-        }
-    }
-  }
-  */
+  //res.json({ name: req.body.name, ingredients: [req.body.ingredients], instructions: [req.body.instructions] });
+  res.json({ name: req.body.name, ingredients: ingredientList, instructions: instructionList });
 })
 
 
