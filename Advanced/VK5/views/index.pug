@@ -1,0 +1,51 @@
+extends layout
+
+block content
+  nav
+    .nav-wrapper
+      a(href="#") Recipe API
+      input#nav-search(type="search")
+
+  .container
+    .col
+      //Viewing the recipe
+      h1#recipe-name
+      p
+      h3 Ingredients
+      p#ingredients
+      h3 Instructions
+      p#instructions
+      p
+    .col
+      //Adding new recipe
+      //for inserting the recipe name
+      p Search:
+      input#search-text(type="text")
+      p Add name:
+      input#name-text(type="text")
+      h4 Ingredients
+      textarea#ingredients-text(cols="10", rows="10")
+      button#add-ingredient(type="button", class="btn") Add ingredient
+
+      h4 Instructions
+      textarea#instructions-text(cols="10", rows="10")
+      button#add-instruction(type="button", class="btn") Add instruction
+      p
+      form(action="/images", method="post", enctype="multipart/form-data")
+        input#image-input(type="file", name="image-input", accept=".jpg", multiple)
+      p
+      p Categories
+      label(for="gluten-free")
+        input#gluten-free(type='checkbox', name='Gluten-free')
+        span Gluten-free
+      p
+      label(for="vegan")
+        input#vegan(type='checkbox', name='vegan')
+        span vegan
+      p
+      label(for="ovo")
+        input#ovo(type='checkbox', name='Ovo')
+        span Ovo
+      p
+      button#submit(type="submit", class="btn") Submit
+
